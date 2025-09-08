@@ -2483,6 +2483,13 @@ body {
   opacity: 0;
 }
 
+/* opsional: pill aktif */
+.pill.active { 
+  border-color: #e9d596; 
+  box-shadow: 0 0 0 1px #e9d59622 inset; 
+}
+
+
 
 
 
