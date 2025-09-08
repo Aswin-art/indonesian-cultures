@@ -1,24 +1,26 @@
 // src/ui/sidebar.js
 // Sidebar + LoL-like Lightbox (vertical slides: image left + info right)
 
+import { formatCategory } from '../utils/string.util'
+
 export function initSidebar({ assets }) {
-  const backdrop   = document.getElementById("backdrop");
-  const sidebar    = document.getElementById("sidebar");
-  const sbIcon     = document.getElementById("sbIcon");
-  const sbTitle    = document.getElementById("sbTitle");
+  const backdrop = document.getElementById("backdrop");
+  const sidebar = document.getElementById("sidebar");
+  const sbIcon = document.getElementById("sbIcon");
+  const sbTitle = document.getElementById("sbTitle");
   const sbSubtitle = document.getElementById("sbSubtitle");
-  const sbList     = document.getElementById("sbList");
+  const sbList = document.getElementById("sbList");
 
   // panel sidebar
-  const sbHero    = document.getElementById("sbHero");
-  const sbDesc    = document.getElementById("sbDesc");
+  const sbHero = document.getElementById("sbHero");
+  const sbDesc = document.getElementById("sbDesc");
   const sbGallery = document.getElementById("sbGallery");
   const sbYoutube = document.getElementById("sbYoutube");
 
   // lightbox (markup sudah ada di HTML)
-  const iScrim    = document.getElementById("iscrim");
-  const iModal    = document.getElementById("imodal");
-  const imgClose  = document.getElementById("imgClose");
+  const iScrim = document.getElementById("iscrim");
+  const iModal = document.getElementById("imodal");
+  const imgClose = document.getElementById("imgClose");
   const imgStream = document.getElementById("imgStream");
 
   let _lightbox = { index: 0 };
@@ -46,12 +48,12 @@ export function initSidebar({ assets }) {
 
           return {
             cover,
-            title    : s.title || s.name || prov.id,
-            desc     : s.desc  || s.description || prov.desc || "",
-            category : s.category || s.kategori || "",
+            title: s.title || s.name || prov.id,
+            desc: s.desc || s.description || prov.desc || "",
+            category: s.category || s.kategori || "",
             images,
-            youtube  : s.youtubeLink || s.youtube || s.yt || "",
-            province : prov.id,
+            youtube: s.youtubeLink || s.youtube || s.yt || "",
+            province: prov.id,
           };
         })
         .filter((s) => !!s.cover);
@@ -63,12 +65,12 @@ export function initSidebar({ assets }) {
     if (Array.isArray(prov.images)) imgs.push(...prov.images);
 
     return imgs.map((src) => ({
-      cover   : src,
-      title   : prov.id,
-      desc    : prov.desc || "",
+      cover: src,
+      title: prov.id,
+      desc: prov.desc || "",
       category: "",
-      images  : [src],
-      youtube : "",
+      images: [src],
+      youtube: "",
       province: prov.id,
     }));
   }
@@ -110,10 +112,13 @@ export function initSidebar({ assets }) {
       bg.alt = s.title || "Gallery image";
       bg.className = "nox-card__bg";
 
+      console.log(s);
+      const budayaCategory = s.category || "BUDAYA & WARISAN";
+
       const content = document.createElement("div");
       content.className = "nox-card__content";
       const sub = document.createElement("div");
-      sub.className = "nox-sub"; sub.textContent = "BUDAYA & WARISAN";
+      sub.className = "nox-sub"; sub.textContent = formatCategory(budayaCategory);
       const ttl = document.createElement("div");
       ttl.className = "nox-title"; ttl.textContent = (s.title || prov.id).toUpperCase();
 
@@ -260,9 +265,9 @@ export function initSidebar({ assets }) {
 
     const thumbsHtml = thumbs.length > 1
       ? `<div class="img-thumbs" role="list" aria-label="Foto terkait">
-           ${thumbs.map((t,ti)=>
-             `<button class="thumb ${ti===0?"is-active":""}"
-                      data-pidx="${ti}" aria-label="Foto ${ti+1}">
+           ${thumbs.map((t, ti) =>
+        `<button class="thumb ${ti === 0 ? "is-active" : ""}"
+                      data-pidx="${ti}" aria-label="Foto ${ti + 1}">
                 <img src="${t}" alt="" loading="lazy" />
               </button>`).join("")}
          </div>`
@@ -275,12 +280,11 @@ export function initSidebar({ assets }) {
       <div class="img-chips">${chips}</div>
       <p class="img-desc">${desc || ""}</p>
       ${thumbsHtml}
-      ${
-        youtube
-          ? `<div class="img-actions">
+      ${youtube
+        ? `<div class="img-actions">
                <a class="btn yt" href="${youtube}" target="_blank" rel="noopener">Tonton Video</a>
              </div>`
-          : ""
+        : ""
       }
     `;
 
@@ -308,12 +312,12 @@ export function initSidebar({ assets }) {
       imgStream.appendChild(
         buildSlide({
           i, total,
-          title : s.title || prov.id,
-          desc  : s.desc ?? prov.desc ?? "",
+          title: s.title || prov.id,
+          desc: s.desc ?? prov.desc ?? "",
           category: s.category || "",
           province: s.province || prov.id,
-          youtube : s.youtube || "",
-          thumbs  : base.length ? base : [s.cover],
+          youtube: s.youtube || "",
+          thumbs: base.length ? base : [s.cover],
         })
       );
     });
@@ -393,4 +397,3 @@ export function initSidebar({ assets }) {
     backdropEl: backdrop,
   };
 }
-  

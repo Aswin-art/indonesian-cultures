@@ -2,6 +2,8 @@
 // UI & logic Quick Shortcuts: build data dari PROVINCES, filter, navigasi keyboard,
 // flyTo dengan offset center, dan buka sidebar.
 
+import { formatCategory } from "../utils/string.util.js";
+
 export function initQuickShortcuts({
   map,
   H,
@@ -47,8 +49,7 @@ export function initQuickShortcuts({
       el.setAttribute("tabindex", "0");
       el.setAttribute("aria-selected", i === active ? "true" : "false");
       el.innerHTML = `
-        <div class="qicon"><img style="width:100%;" src="${
-          assets.icons[it.provId] || ""
+        <div class="qicon"><img style="width:100%;" src="${assets.icons[it.provId] || ""
         }" alt="${it.provId}"></div>
         <div class="qtitle">${it.title}</div>
         <div class="qdesc">${it.provId}</div>
@@ -146,10 +147,3 @@ export function initQuickShortcuts({
   return { open };
 }
 
-function formatCategory(title) {
-  if (!title) return "";
-  return title
-    .split("_")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
