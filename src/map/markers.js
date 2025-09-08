@@ -31,31 +31,48 @@ export function addProvinceMarkers({
       riseOnHover: true,
     }).addTo(map);
 
-    // === Tooltip Label dengan animasi reveal (trend 2025) ===
-    marker.bindTooltip(
-      `<span class="label-text">${p.id}</span><span class="reveal-line"></span>`,
-      {
-        direction: "top",
-        offset: [0, -28],
-        permanent: false,
-        opacity: 1, // biar CSS yang atur opacity
-        className: "prov-label", // styling & animasi di CSS
-        sticky: true, // mengikuti cursor saat hover
-      }
+    // === Tooltip permanen; kita kontrol visibilitas via class ===
+    const tt = L.tooltip({
+      permanent: true, // selalu terpasang ke marker (anchor fix)
+      direction: "top", // di atas ikon
+      offset: [0, -28], // jarak dari ikon
+      className: "prov-label", // styling & animasi di CSS
+      opacity: 1, // biar diatur CSS
+      sticky: false, // penting: JANGAN mengikuti kursor
+    }).setContent(
+      `<span class="label-text">${p.id}</span><span class="reveal-line"></span>`
     );
 
-    let hideT;
-    marker.on("mouseover", () => {
-      clearTimeout(hideT);
-      fadeBorder?.(p.id, 1);
-      audioCtl?.playHoverSfx?.();
-      marker.openTooltip();
+    marker.bindTooltip(tt);
+
+    // Saat marker sudah ada di map, set awal: hidden
+    marker.on("add", () => {
+      const el = marker.getTooltip()?.getElement();
+      if (el) el.classList.add("is-hidden");
     });
 
+    marker.on("mouseover", () => {
+      fadeBorder?.(p.id, 1);
+      audioCtl?.playHoverSfx?.();
+      const el = marker.getTooltip()?.getElement();
+      if (el) {
+        el.classList.remove("is-hidden");
+        el.classList.add("is-visible");
+      }
+    });
+
+    // Sedikit delay agar transisi keluar terasa halus
+    let hideT;
     marker.on("mouseout", () => {
       fadeBorder?.(p.id, 0);
       clearTimeout(hideT);
-      hideT = setTimeout(() => marker.closeTooltip(), 120);
+      hideT = setTimeout(() => {
+        const el = marker.getTooltip()?.getElement();
+        if (el) {
+          el.classList.remove("is-visible");
+          el.classList.add("is-hidden");
+        }
+      }, 80);
     });
 
     marker.on("click", () => {
