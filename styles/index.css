@@ -2232,115 +2232,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* kartu */
-.evt2 {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 14px;
-  background: rgba(12, 21, 29, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 12px;
-}
-@media (max-width: 520px) {
-  .evt2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-.evt2-img {
-  background: #0f1a24;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  border-radius: 12px;
-}
-.evt2-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.evt2-img .ph {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.evt2-main {
-  padding: 12px 12px 14px 0;
-}
-.evt2-title {
-  font-weight: 900;
-  line-height: 1.2;
-}
-.evt2-loc {
-  color: #8aa0bb;
-  font-size: 0.9rem;
-  margin: 2px 0 6px;
-}
-.evt2-desc {
-  color: #cbd5e1;
-  font-size: 0.95rem;
-  margin: 6px 0 10px;
-}
-
-.evt2-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.evt2-tags .tag {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  padding: 4px 8px;
-  font-size: 0.8rem;
-}
-
-.evt2-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.evt2-price {
-  color: #c8d1e1;
-  font-weight: 800;
-}
-
-.gbtn.yt {
-  background: #222e3a;
-}
-.gbtn.yt::before {
-  content: "▶ ";
-  font-weight: 900;
-}
-
-/* ==== Event v2 (scrollable list) ==== */
-.evt2-wrap {
-  display: grid;
-  grid-template-columns: minmax(340px, 1fr) 300px;
-  gap: 16px;
-  align-items: start;
-}
-@media (max-width: 1024px) {
-  .evt2-wrap {
-    grid-template-columns: 1fr;
-  }
-}
-
-.evt2-list {
-  max-height: 62vh;
-  overflow: auto;
-  padding-right: 6px;
-  outline: none;
-  scroll-behavior: smooth;
-}
-
 .evt2 {
   display: grid;
   grid-template-columns: 140px 1fr;
@@ -2455,89 +2346,6 @@ body {
   .evt2 {
     margin-bottom: 0;
   } /* karena sudah pakai grid gap */
-}
-
-/* Kartu: layout vertikal (gambar di atas) biar compact */
-.evt2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: rgba(12, 21, 29, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-/* Gambar rasio 4:3, fill rapi */
-.evt2-img {
-  aspect-ratio: 4 / 3;
-  background: #0f1a24;
-}
-.evt2-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Konten */
-.evt2-main {
-  padding: 12px;
-}
-.evt2-title {
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 4px;
-}
-.evt2-loc {
-  color: #8aa0bb;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-}
-
-/* Deskripsi pakai clamp (bukan scroll) */
-.evt2-desc {
-  color: #cbd5e1;
-  font-size: 0.95rem;
-  margin: 6px 0 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Tag & footer */
-.evt2-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.evt2-tags .tag {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  padding: 4px 8px;
-  font-size: 0.8rem;
-}
-.evt2-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.evt2-price {
-  color: #c8d1e1;
-  font-weight: 800;
-}
-
-/* Sidebar biar gak “makan tempat” */
-.evt2-aside .hintbox {
-  margin-bottom: 12px;
-}
-@media (max-width: 1024px) {
-  .evt2-wrap {
-    grid-template-columns: 1fr;
-  }
 }
 
 .img-meta .img-chips {
@@ -2674,3 +2482,7 @@ body {
 .leaflet-tooltip.prov-label.is-hidden .reveal-line {
   opacity: 0;
 }
+
+
+
+
