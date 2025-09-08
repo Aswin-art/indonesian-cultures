@@ -84,7 +84,8 @@ function card(ev) {
     <div class="evt2-main">
       <div class="evt2-title">${ev.title}</div>
       ${loc ? `<div class="evt2-loc">${loc}</div>` : ""}
-      <p class="evt2-desc">${trim(ev.desc, 220)}</p>
+      <!-- FULL: tampilkan semua deskripsi, tanpa trim() -->
+      <p class="evt2-desc">${ev.desc || ""}</p>
       <div class="evt2-tags">
         ${(ev.tags || []).map((t) => `<span class="tag">${t}</span>`).join("")}
       </div>
@@ -197,7 +198,6 @@ function buildFilterPopover(anchorBtn) {
 
   // posisi
   const r = anchorBtn.getBoundingClientRect();
-  // ukur setelah append (offsetWidth sudah ada)
   const top = window.scrollY + r.bottom + 8;
   const left = Math.min(
     window.scrollX + r.left,
@@ -220,10 +220,9 @@ function buildFilterPopover(anchorBtn) {
 
   // APPLY: commit TMP -> FILTERS + render (JANGAN close)
   $("#fltApply", pop).addEventListener("click", (e) => {
-    e.stopPropagation(); // cegah outside-closer
+    e.stopPropagation();
     FILTERS = { ...TMP };
     applyFilters();
-    // feedback kecil di tombol
     const btn = e.currentTarget;
     const old = btn.textContent;
     btn.textContent = "Applied ✓";
@@ -234,7 +233,7 @@ function buildFilterPopover(anchorBtn) {
     }, 700);
   });
 
-  // RESET: set default ke UI + TMP, langsung terapkan, TIDAK close
+  // RESET: defaultkan + terapkan (TIDAK close)
   $("#fltReset", pop).addEventListener("click", (e) => {
     e.stopPropagation();
     TMP.tag = "all";
@@ -245,14 +244,13 @@ function buildFilterPopover(anchorBtn) {
     applyFilters();
   });
 
-  // CLOSE tanpa commit tambahan
+  // CLOSE
   $("#fltClose", pop).addEventListener("click", (e) => {
     e.stopPropagation();
     hideFilterPopover();
   });
 
   // klik di luar = close
-  // pastikan hanya satu outside-listener aktif
   if (removeOutsideListener) removeOutsideListener();
   const outside = (ev) => {
     if (!pop.contains(ev.target) && ev.target !== anchorBtn) {
@@ -260,7 +258,8 @@ function buildFilterPopover(anchorBtn) {
     }
   };
   window.addEventListener("click", outside, { capture: true });
-  removeOutsideListener = () => window.removeEventListener("click", outside, { capture: true });
+  removeOutsideListener = () =>
+    window.removeEventListener("click", outside, { capture: true });
 
   filterPopover = pop;
 }
@@ -313,7 +312,7 @@ export function registerEventsUI() {
       closeEvents();
   });
 
-  // buka modal Event (jika ada trigger global)
+  // buka modal Event (trigger global)
   document.addEventListener("click", (e) => {
     const opener = e.target.closest('[data-open="events"]');
     if (opener) {

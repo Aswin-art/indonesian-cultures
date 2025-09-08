@@ -2489,6 +2489,30 @@ body {
   box-shadow: 0 0 0 1px #e9d59622 inset; 
 }
 
+/* ===== OVERRIDES: Event list 1 kolom & deskripsi full ===== */
+
+/* Matikan layout 2 kolom pada list */
+.evt2-list {
+  display: block !important;
+  max-height: 62vh;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+/* Pastikan rule 2 kolom lama tidak aktif di layar lebar */
+@media (min-width: 1200px) {
+  .evt2-list {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+  .evt2 { margin-bottom: 12px !important; }
+}
+
+/* Deskripsi tidak dipotong, hormati line-break dari data */
+.evt2-desc {
+  white-space: pre-line;
+  overflow: visible;
+}
 
 
 
