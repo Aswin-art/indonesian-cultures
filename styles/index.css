@@ -63,25 +63,83 @@ body {
 }
 
 .prov-icon {
+  position: relative;
   width: 40px;
   height: 40px;
-  border-radius: 999px;
-  background: transparent; /* hilangkan bg */
-  border: none; /* hilangkan border */
-  display: grid;
-  place-items: center;
-  box-shadow: none; /* hilangkan shadow supaya bersih */
-  backdrop-filter: none;
-  transition: transform 0.18s ease;
+  transform: translateZ(0);
 }
-.prov-icon img {
+.prov-icon .prov-img {
   width: 48px;
   height: 48px;
   border-radius: 999px; /* gambar jadi full rounded */
   object-fit: cover; /* pasti mengisi dan crop secara bagus */
 }
+.prov-label-inline {
+  position: absolute;
+  left: 50%;
+  bottom: 100%; /* tepat di atas ikon */
+  transform: translateX(-50%) translateY(-6px) scale(0.985);
+  white-space: nowrap;
+  pointer-events: none; /* tidak mengganggu hover ikon */
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  background: linear-gradient(
+    120deg,
+    rgba(212, 175, 55, 0.08),
+    rgba(255, 218, 121, 0.1)
+  );
+  color: #f4e7c7;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 218, 121, 0.08);
+  backdrop-filter: blur(6px);
+
+  /* state awal: hidden */
+  opacity: 0;
+  filter: blur(6px);
+  clip-path: inset(0 100% 0 0 round 10px); /* wipe dari kiri */
+  transition: opacity 0.22s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    clip-path 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
 .prov-icon:hover {
   transform: scale(1.08);
+}
+.prov-icon:hover .prov-label-inline {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(-50%) translateY(-6px) scale(1);
+  clip-path: inset(0 0 0 0 round 10px);
+}
+.prov-label-inline .label-text {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.prov-label-inline .reveal-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffda79, transparent);
+  border-radius: 999px;
+  transform-origin: left center;
+  opacity: 0;
+  transform: translateX(-22%) scaleX(0);
+  transition: transform 0.46s cubic-bezier(0.2, 0.7, 0.2, 1) 0.06s,
+    opacity 0.3s ease 0.06s;
+}
+
+/* aktif hanya saat hover ikon yang sama */
+.prov-icon:hover .reveal-line {
+  opacity: 0.9;
+  transform: translateX(0) scaleX(1);
 }
 .icons-hidden .prov-icon {
   opacity: 0;
